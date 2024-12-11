@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "148532783222",
+    "project_id": "capstone-c242-ps480",
+    "storage_bucket": "capstone-c242-ps480.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:148532783222:android:204ab764e9d6df14c55757",
+        "android_client_info": {
+          "package_name": "com.example.carol"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZueJnCVCURw0nudji0teJwqxIhiziXBE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
