@@ -46,8 +46,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"
-        android:alpha="0"
+        android:layout_marginTop="60dp"
         android:text="@string/name"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,110 +54,56 @@
         tools:alpha="100" />
 
     <EditText
-        android:id="@+id/fullNameField"
+        android:id="@+id/displayNameTextView"
         android:layout_width="375dp"
         android:layout_height="45dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="8dp"
         android:drawableStart="@drawable/ic_baseline_person_24"
         android:drawablePadding="8dp"
-        android:hint="Full Name"
         android:enabled="false"
+        android:hint="Full Name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/personalInfoTitle" />
+        app:layout_constraintTop_toBottomOf="@id/nameTextView" />
 
     <TextView
         android:id="@+id/emailTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"
-        android:alpha="0"
+        android:layout_marginTop="20dp"
         android:text="@string/email"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fullNameField"
+        app:layout_constraintTop_toBottomOf="@+id/displayNameTextView"
         tools:alpha="100" />
 
     <EditText
         android:id="@+id/emailField"
         android:layout_width="375dp"
         android:layout_height="45dp"
-        android:layout_marginTop="31dp"
+        android:layout_marginTop="8dp"
         android:drawableStart="@drawable/ic_baseline_email_24"
         android:drawablePadding="8dp"
+        android:enabled="false"
         android:hint="E-mail"
-        android:enabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fullNameField" />
-
-    <TextView
-        android:id="@+id/contactTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"
-        android:alpha="0"
-        android:text="@string/contact"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailField"
-        tools:alpha="100" />
-
-    <EditText
-        android:id="@+id/contactNumberField"
-        android:layout_width="375dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="31dp"
-        android:drawableStart="@drawable/baseline_contact_page_24"
-        android:drawablePadding="8dp"
-        android:hint="Contact Number"
-        android:enabled="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.555"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/emailField" />
-
-    <Button
-        android:id="@+id/saveButton"
-        style="@style/ButtonStyle.Navy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="8dp"
-        android:text="Save"
-        app:layout_constraintEnd_toStartOf="@id/editButton"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/contactNumberField" />
-
-    <Button
-        android:id="@+id/editButton"
-        style="@style/ButtonStyle.Navy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Edit"
-        app:layout_constraintEnd_toStartOf="@id/logoutButton"
-        app:layout_constraintStart_toEndOf="@id/saveButton"
-        app:layout_constraintTop_toBottomOf="@id/contactNumberField"
-        android:layout_marginTop="28dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        app:layout_constraintTop_toBottomOf="@id/emailTextView" />
 
     <Button
         android:id="@+id/logoutButton"
         style="@style/ButtonStyle.Navy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="104dp"
+        android:layout_marginEnd="156dp"
+
         android:text="Log Out"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/editButton"
-        app:layout_constraintTop_toBottomOf="@id/contactNumberField"
-        android:layout_marginTop="28dp"
-        android:layout_marginStart="8dp" />
+        app:layout_constraintTop_toBottomOf="@id/emailField" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

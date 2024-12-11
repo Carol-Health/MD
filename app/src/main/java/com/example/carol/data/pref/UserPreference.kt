@@ -10,24 +10,26 @@ import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "session")
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user_preferences")
 
 class UserPreference private constructor(private val dataStore: DataStore<Preferences>) {
 
     suspend fun saveSession(user: UserModel) {
         dataStore.edit { preferences ->
-            preferences[EMAIL_KEY] = user.email
-            preferences[TOKEN_KEY] = user.token
-            preferences[IS_LOGIN_KEY] = true
+            preferences[UID_KEY] = user.uid
+            preferences[EMAIL_KEY] = user.email ?: ""
+            preferences[DISPLAY_NAME_KEY] = user.displayName ?: ""
+            preferences[IS_LOGIN_KEY] = user.isLogin
         }
     }
 
     fun getSession(): Flow<UserModel> {
         return dataStore.data.map { preferences ->
             UserModel(
-                preferences[EMAIL_KEY] ?: "",
-                preferences[TOKEN_KEY] ?: "",
-                preferences[IS_LOGIN_KEY] ?: false
+                uid = preferences[UID_KEY] ?: "",
+                email = preferences[EMAIL_KEY],
+                displayName = preferences[DISPLAY_NAME_KEY],
+                isLogin = preferences[IS_LOGIN_KEY] ?: false
             )
         }
     }
@@ -42,9 +44,10 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
         @Volatile
         private var INSTANCE: UserPreference? = null
 
+        private val UID_KEY = stringPreferencesKey("uid")
         private val EMAIL_KEY = stringPreferencesKey("email")
-        private val TOKEN_KEY = stringPreferencesKey("token")
-        private val IS_LOGIN_KEY = booleanPreferencesKey("isLogin")
+        private val DISPLAY_NAME_KEY = stringPreferencesKey("display_name")
+        private val IS_LOGIN_KEY = booleanPreferencesKey("is_login")
 
         fun getInstance(dataStore: DataStore<Preferences>): UserPreference {
             return INSTANCE ?: synchronized(this) {

@@ -7,92 +7,59 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.carol.R
-import com.example.carol.utils.ProfilePreferences
+import com.example.carol.view.login.LoginActivity
 import com.example.carol.view.welcome.WelcomeActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 
 class ProfileFragment : Fragment() {
 
-    private lateinit var fullNameField: EditText
-    private lateinit var emailField: EditText
-    private lateinit var contactNumberField: EditText
-    private lateinit var saveButton: Button
-    private lateinit var editButton: Button
+    private lateinit var displayNameEditText: EditText
+    private lateinit var emailEditText: EditText
     private lateinit var logoutButton: Button
-    private lateinit var profilePreferences: ProfilePreferences
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user == null) {
+            val intent = Intent(requireContext(), LoginActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
+            return null
+        }
+
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
-        fullNameField = view.findViewById(R.id.fullNameField)
-        emailField = view.findViewById(R.id.emailField)
-        contactNumberField = view.findViewById(R.id.contactNumberField)
-        saveButton = view.findViewById(R.id.saveButton)
-        editButton = view.findViewById(R.id.editButton)
+        displayNameEditText = view.findViewById(R.id.displayNameTextView)
+        emailEditText = view.findViewById(R.id.emailField)
         logoutButton = view.findViewById(R.id.logoutButton)
 
-        profilePreferences = ProfilePreferences(requireContext())
-
-        loadProfileData()
-        setFieldsEditable(false)
-        setIconsTint(R.color.grey)
-
-        editButton.setOnClickListener {
-            setFieldsEditable(true)
-            setIconsTint(R.color.black)
-        }
-
-        saveButton.setOnClickListener {
-            saveProfileData()
-            setFieldsEditable(false)
-            setIconsTint(R.color.grey)
-        }
+        loadUserProfile(user)
 
         logoutButton.setOnClickListener {
-            logout()
+            performLogout()
         }
 
         return view
     }
 
-    private fun setFieldsEditable(editable: Boolean) {
-        fullNameField.isEnabled = editable
-        emailField.isEnabled = editable
-        contactNumberField.isEnabled = editable
-        saveButton.isEnabled = editable
-        editButton.isEnabled = !editable
+    private fun loadUserProfile(user: FirebaseUser) {
+        val displayName = user.displayName ?: "Nama tidak tersedia"
+        val email = user.email ?: "Email tidak tersedia"
+
+        android.util.Log.d("ProfileFragment", "Display Name: $displayName")
+
+        displayNameEditText.setText(displayName)
+        emailEditText.setText(email)
     }
 
-    private fun setIconsTint(colorResId: Int) {
-        val colorStateList = ContextCompat.getColorStateList(requireContext(), colorResId)
-        fullNameField.compoundDrawableTintList = colorStateList
-        emailField.compoundDrawableTintList = colorStateList
-        contactNumberField.compoundDrawableTintList = colorStateList
-    }
 
-    private fun saveProfileData() {
-        val fullName = fullNameField.text.toString()
-        val email = emailField.text.toString()
-        val contactNumber = contactNumberField.text.toString()
-
-        profilePreferences.saveProfile(fullName, email, contactNumber)
-        println("Saved Profile Data: Name=$fullName, Email=$email, Contact=$contactNumber")
-    }
-
-    private fun loadProfileData() {
-        fullNameField.setText(profilePreferences.getName())
-        emailField.setText(profilePreferences.getEmail())
-        contactNumberField.setText(profilePreferences.getContact())
-    }
-
-    private fun logout() {
-        profilePreferences.clearProfile()
-
+    private fun performLogout() {
+        FirebaseAuth.getInstance().signOut()
         val intent = Intent(requireContext(), WelcomeActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
