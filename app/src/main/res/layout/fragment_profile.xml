@@ -45,7 +45,7 @@
         android:id="@+id/nameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="52dp"
         android:layout_marginTop="60dp"
         android:text="@string/name"
         android:textColor="@color/black"
@@ -55,7 +55,7 @@
 
     <EditText
         android:id="@+id/displayNameTextView"
-        android:layout_width="375dp"
+        android:layout_width="300dp"
         android:layout_height="45dp"
         android:layout_marginTop="8dp"
         android:drawableStart="@drawable/ic_baseline_person_24"
@@ -63,7 +63,7 @@
         android:enabled="false"
         android:hint="Full Name"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.555"
+        app:layout_constraintHorizontal_bias="0.468"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/nameTextView" />
 
@@ -71,8 +71,8 @@
         android:id="@+id/emailTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="24dp"
         android:text="@string/email"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
@@ -81,7 +81,7 @@
 
     <EditText
         android:id="@+id/emailField"
-        android:layout_width="375dp"
+        android:layout_width="300dp"
         android:layout_height="45dp"
         android:layout_marginTop="8dp"
         android:drawableStart="@drawable/ic_baseline_email_24"
@@ -89,21 +89,22 @@
         android:enabled="false"
         android:hint="E-mail"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.555"
+        app:layout_constraintHorizontal_bias="0.468"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/emailTextView" />
 
     <Button
         android:id="@+id/logoutButton"
-        style="@style/ButtonStyle.Navy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="104dp"
-        android:layout_marginEnd="156dp"
-
+        android:layout_marginTop="40dp"
         android:text="Log Out"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/emailField" />
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/emailField"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

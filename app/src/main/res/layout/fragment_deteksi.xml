@@ -32,32 +32,33 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:padding="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <Button
             android:id="@+id/useCameraButton"
-            style="@style/ButtonStyle.Navy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Use Camera" />
+            android:text="Use Camera"
+            android:textSize="20sp"/>
 
         <Button
             android:id="@+id/chooseImageButton"
-            style="@style/ButtonStyle.Navy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Choose Image" />
+            android:text="Choose Image"
+            android:textSize="20sp"/>
 
         <Button
             android:id="@+id/analyzeButton"
-            style="@style/ButtonStyle.Navy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Lets Analyze" />
+            android:text="Lets Analyze"
+            android:textSize="20sp"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

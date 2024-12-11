@@ -1,9 +1,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.Carol" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.Carol" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your light theme here. -->
-        <item name="colorPrimary">@color/navy</item>
+        <item name="colorPrimary">@color/blue_light</item>
         <item name="colorOnPrimary">@android:color/white</item>
+        <item name="android:forceDarkAllowed">false</item>
     </style>
 
 
@@ -11,8 +12,8 @@
     <style name="Theme.Carol" parent="Base.Theme.Carol" />
 
     <!-- Custom Button Style for Navy Background -->
-    <style name="ButtonStyle.Navy" parent="Widget.Material3.Button">
-        <item name="android:backgroundTint">@color/navy</item>
+    <style name="ButtonStyle.blue_light" parent="Widget.Material3.Button">
+        <item name="android:backgroundTint">@color/blue_light</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
 </resources>
