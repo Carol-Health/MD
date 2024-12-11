@@ -16,9 +16,11 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
 
     suspend fun saveSession(user: UserModel) {
         dataStore.edit { preferences ->
-            preferences[UID_KEY] = user.uid
+            preferences[ID_KEY] = user.id
             preferences[EMAIL_KEY] = user.email ?: ""
-            preferences[DISPLAY_NAME_KEY] = user.displayName ?: ""
+            preferences[USERNAME_KEY] = user.username ?: ""
+            preferences[PASSWORD_KEY] = user.password ?: ""
+            preferences[CREATED_AT_KEY] = user.createdAt ?: ""
             preferences[IS_LOGIN_KEY] = user.isLogin
         }
     }
@@ -26,9 +28,11 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
     fun getSession(): Flow<UserModel> {
         return dataStore.data.map { preferences ->
             UserModel(
-                uid = preferences[UID_KEY] ?: "",
+                id = preferences[ID_KEY] ?: "",
                 email = preferences[EMAIL_KEY],
-                displayName = preferences[DISPLAY_NAME_KEY],
+                username = preferences[USERNAME_KEY],
+                password = preferences[PASSWORD_KEY],
+                createdAt = preferences[CREATED_AT_KEY],
                 isLogin = preferences[IS_LOGIN_KEY] ?: false
             )
         }
@@ -44,9 +48,11 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
         @Volatile
         private var INSTANCE: UserPreference? = null
 
-        private val UID_KEY = stringPreferencesKey("uid")
+        private val ID_KEY = stringPreferencesKey("id")
         private val EMAIL_KEY = stringPreferencesKey("email")
-        private val DISPLAY_NAME_KEY = stringPreferencesKey("display_name")
+        private val USERNAME_KEY = stringPreferencesKey("username")
+        private val PASSWORD_KEY = stringPreferencesKey("password")
+        private val CREATED_AT_KEY = stringPreferencesKey("created_at")
         private val IS_LOGIN_KEY = booleanPreferencesKey("is_login")
 
         fun getInstance(dataStore: DataStore<Preferences>): UserPreference {

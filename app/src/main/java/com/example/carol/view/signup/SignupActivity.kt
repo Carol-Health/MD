@@ -11,10 +11,14 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.carol.databinding.ActivitySignupBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.Timestamp
+import java.security.MessageDigest
 
 class SignupActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignupBinding
     private lateinit var auth: FirebaseAuth
+    private val firestore = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +45,12 @@ class SignupActivity : AppCompatActivity() {
         supportActionBar?.hide()
     }
 
+    private fun hashPassword(password: String): String {
+        val md = MessageDigest.getInstance("SHA-256")
+        val hashBytes = md.digest(password.toByteArray())
+        return hashBytes.joinToString("") { "%02x".format(it) }
+    }
+
     private fun setupAction() {
         binding.signupButton.setOnClickListener {
             val name = binding.nameEditText.text.toString().trim()
@@ -51,7 +61,6 @@ class SignupActivity : AppCompatActivity() {
                 name.isEmpty() -> binding.nameEditText.error = "Nama lengkap tidak boleh kosong"
                 email.isEmpty() -> binding.emailEditText.error = "Email tidak boleh kosong"
                 !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> binding.emailEditText.error = "Format email tidak valid"
-                !email.endsWith("@gmail.com") -> binding.emailEditText.error = "Email harus menggunakan @gmail.com"
                 password.isEmpty() -> binding.passwordEditText.error = "Password tidak boleh kosong"
                 password.length < 7 -> binding.passwordEditText.error = "Password minimal 7 karakter"
                 else -> auth.createUserWithEmailAndPassword(email, password)
@@ -59,32 +68,37 @@ class SignupActivity : AppCompatActivity() {
                         if (task.isSuccessful) {
                             val user = auth.currentUser
                             if (user != null) {
-                                user.updateProfile(
-                                    com.google.firebase.auth.UserProfileChangeRequest.Builder()
-                                        .setDisplayName(name)
-                                        .build()
-                                ).addOnCompleteListener { profileTask ->
-                                    if (profileTask.isSuccessful) {
+                                val userId = user.uid
+                                val createdAt = Timestamp.now() // Firebase Timestamp
+                                val userData = hashMapOf(
+                                    "id" to userId,
+                                    "username" to name,
+                                    "email" to email,
+                                    "password" to hashPassword(password),
+                                    "createdAt" to createdAt
+                                )
+
+                                firestore.collection("users").document(userId).set(userData)
+                                    .addOnSuccessListener {
                                         Toast.makeText(
                                             this,
                                             "Signup berhasil. Silakan login.",
                                             Toast.LENGTH_SHORT
                                         ).show()
                                         finish()
-                                    } else {
+                                    }
+                                    .addOnFailureListener { e ->
                                         Toast.makeText(
                                             this,
-                                            "Gagal memperbarui profil: ${profileTask.exception?.message}",
+                                            "Gagal menyimpan data pengguna: ${e.message}",
                                             Toast.LENGTH_SHORT
                                         ).show()
                                     }
-                                }
                             }
                         } else {
                             Toast.makeText(this, "Signup gagal: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                         }
                     }
-
             }
         }
     }

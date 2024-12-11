@@ -1,8 +1,10 @@
 package com.example.carol.data.pref
 
 data class UserModel(
-    val uid: String,
+    val id: String,
     val email: String?,
-    val displayName: String?,
+    val username: String?,
+    val password: String?,
+    val createdAt: String?,
     val isLogin: Boolean = false
 )

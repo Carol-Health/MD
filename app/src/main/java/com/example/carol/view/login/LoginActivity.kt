@@ -16,6 +16,7 @@ import com.example.carol.databinding.ActivityLoginBinding
 import com.example.carol.view.ViewModelFactory
 import com.example.carol.view.main.MainActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class LoginActivity : AppCompatActivity() {
     private val viewModel by viewModels<LoginViewModel> {
@@ -23,6 +24,7 @@ class LoginActivity : AppCompatActivity() {
     }
     private lateinit var binding: ActivityLoginBinding
     private lateinit var auth: FirebaseAuth
+    private val firestore = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,23 +59,37 @@ class LoginActivity : AppCompatActivity() {
             when {
                 email.isEmpty() -> binding.emailEditText.error = "Email tidak boleh kosong"
                 !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> binding.emailEditText.error = "Format email tidak valid"
-                !email.endsWith("@gmail.com") -> binding.emailEditText.error = "Email harus menggunakan @gmail.com"
                 password.isEmpty() -> binding.passwordEditText.error = "Password tidak boleh kosong"
                 else -> auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
                             val user = auth.currentUser
                             if (user != null) {
-                                val userModel = UserModel(
-                                    uid = user.uid,
-                                    email = user.email,
-                                    displayName = user.displayName,
-                                    isLogin = true
-                                )
-                                viewModel.saveSession(userModel)
-                                Toast.makeText(this, "Login berhasil!", Toast.LENGTH_SHORT).show()
-                                startActivity(Intent(this, MainActivity::class.java))
-                                finish()
+                                firestore.collection("users").document(user.uid).get()
+                                    .addOnSuccessListener { document ->
+                                        if (document.exists()) {
+                                            val createdAtTimestamp = document.getTimestamp("createdAt")
+                                            val createdAt = createdAtTimestamp?.toDate()?.toString() ?: "" // Convert Timestamp to String
+
+                                            val userModel = UserModel(
+                                                id = user.uid,
+                                                email = user.email,
+                                                username = document.getString("username"),
+                                                isLogin = true,
+                                                createdAt = createdAt,
+                                                password = document.getString("password") ?: ""
+                                            )
+                                            viewModel.saveSession(userModel)
+                                            Toast.makeText(this, "Login berhasil!", Toast.LENGTH_SHORT).show()
+                                            startActivity(Intent(this, MainActivity::class.java))
+                                            finish()
+                                        } else {
+                                            Toast.makeText(this, "Data pengguna tidak ditemukan.", Toast.LENGTH_SHORT).show()
+                                        }
+                                    }
+                                    .addOnFailureListener {
+                                        Toast.makeText(this, "Gagal memuat data pengguna.", Toast.LENGTH_SHORT).show()
+                                    }
                             }
                         } else {
                             Toast.makeText(this, "Login gagal: ${task.exception?.message}", Toast.LENGTH_SHORT).show()

@@ -12,13 +12,14 @@ import com.example.carol.R
 import com.example.carol.view.login.LoginActivity
 import com.example.carol.view.welcome.WelcomeActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
 
 class ProfileFragment : Fragment() {
 
     private lateinit var displayNameEditText: EditText
     private lateinit var emailEditText: EditText
     private lateinit var logoutButton: Button
+    private val firestore = FirebaseFirestore.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,7 +39,7 @@ class ProfileFragment : Fragment() {
         emailEditText = view.findViewById(R.id.emailField)
         logoutButton = view.findViewById(R.id.logoutButton)
 
-        loadUserProfile(user)
+        loadUserProfile(user.uid)
 
         logoutButton.setOnClickListener {
             performLogout()
@@ -47,16 +48,25 @@ class ProfileFragment : Fragment() {
         return view
     }
 
-    private fun loadUserProfile(user: FirebaseUser) {
-        val displayName = user.displayName ?: "Nama tidak tersedia"
-        val email = user.email ?: "Email tidak tersedia"
+    private fun loadUserProfile(uid: String) {
+        firestore.collection("users").document(uid).get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    val displayName = document.getString("username") ?: "Nama tidak tersedia"
+                    val email = document.getString("email") ?: "Email tidak tersedia"
 
-        android.util.Log.d("ProfileFragment", "Display Name: $displayName")
-
-        displayNameEditText.setText(displayName)
-        emailEditText.setText(email)
+                    displayNameEditText.setText(displayName)
+                    emailEditText.setText(email)
+                } else {
+                    displayNameEditText.setText("Nama tidak ditemukan")
+                    emailEditText.setText("Email tidak ditemukan")
+                }
+            }
+            .addOnFailureListener {
+                displayNameEditText.setText("Error memuat nama")
+                emailEditText.setText("Error memuat email")
+            }
     }
-
 
     private fun performLogout() {
         FirebaseAuth.getInstance().signOut()
