@@ -114,8 +114,9 @@ class DeteksiFragment : Fragment() {
 
     private fun navigateToResultActivity(result: DetectionResponse?) {
         val intent = Intent(requireContext(), ResultActivity::class.java).apply {
-            putExtra("diseaseName", result?.predictedClass ?: "Unknown")
-            putExtra("confidenceScore", result?.confidence ?: 0f)
+            putExtra("diseaseName", result?.name ?: "Unknown")
+            putExtra("description", result?.description ?: "No description available.")
+            putExtra("treatment", result?.treatment ?: "No treatment available")
             putExtra("imageUri", selectedImageUri.toString())
         }
         startActivity(intent)

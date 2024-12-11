@@ -6,7 +6,7 @@ import okhttp3.OkHttpClient
 import java.util.concurrent.TimeUnit
 
 object ApiClient {
-    private const val BASE_URL = "https://ml-api-model-471834350687.asia-southeast2.run.app/"
+    private const val BASE_URL = "https://cc-api-model-148532783222.asia-southeast2.run.app "
 
     private val client = OkHttpClient.Builder()
         .connectTimeout(30, TimeUnit.SECONDS)

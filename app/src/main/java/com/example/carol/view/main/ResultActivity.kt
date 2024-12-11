@@ -18,15 +18,18 @@ class ResultActivity : AppCompatActivity() {
         toolbar.setNavigationOnClickListener { finish() }
 
         val diseaseNameTextView: TextView = findViewById(R.id.diseaseNameTextView)
-        val confidenceScoreTextView: TextView = findViewById(R.id.confidenceScoreTextView)
+        val descriptionTextView: TextView = findViewById(R.id.descriptionTextView)
+        val treatmentTextView: TextView = findViewById(R.id.treatmentTextView)
         val resultImageView: ImageView = findViewById(R.id.resultImageView)
 
         val diseaseName = intent.getStringExtra("diseaseName") ?: "Unknown"
-        val confidenceScore = intent.getFloatExtra("confidenceScore", 0f)
+        val description = intent.getStringExtra("description") ?: "No description available."
+        val treatment = intent.getStringExtra("treatment") ?: "No treatment information available."
         val imageUriString = intent.getStringExtra("imageUri")
 
         diseaseNameTextView.text = "Disease: $diseaseName"
-        confidenceScoreTextView.text = "Confidence: ${(confidenceScore * 100).toInt()}%"
+        descriptionTextView.text = "Description: $description"
+        treatmentTextView.text = "Treatment: $treatment"
 
         if (!imageUriString.isNullOrEmpty()) {
             val imageUri = Uri.parse(imageUriString)
