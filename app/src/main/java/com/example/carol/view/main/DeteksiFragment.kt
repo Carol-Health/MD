@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import com.google.firebase.auth.FirebaseAuth
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
@@ -85,6 +86,8 @@ class DeteksiFragment : Fragment() {
     }
 
     private fun analyzeImage() {
+        val uid = FirebaseAuth.getInstance().currentUser!!.uid
+
         if (selectedImageFile == null) {
             Toast.makeText(context, "Please select an image first!", Toast.LENGTH_SHORT).show()
             return
@@ -92,8 +95,9 @@ class DeteksiFragment : Fragment() {
 
         val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), selectedImageFile!!)
         val body = MultipartBody.Part.createFormData("file", selectedImageFile!!.name, requestFile)
+        val uidBody = RequestBody.create("text/plain".toMediaTypeOrNull(), uid)
 
-        ApiClient.apiService.detectDisease(body).enqueue(object : Callback<DetectionResponse> {
+        ApiClient.apiService.detectDisease(body, uidBody).enqueue(object : Callback<DetectionResponse> {
             override fun onResponse(
                 call: Call<DetectionResponse>,
                 response: Response<DetectionResponse>
@@ -108,6 +112,7 @@ class DeteksiFragment : Fragment() {
 
             override fun onFailure(call: Call<DetectionResponse>, t: Throwable) {
                 Toast.makeText(context, "An error occurred", Toast.LENGTH_SHORT).show()
+
             }
         })
     }
