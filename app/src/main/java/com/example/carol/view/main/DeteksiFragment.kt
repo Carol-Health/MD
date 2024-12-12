@@ -72,7 +72,6 @@ class DeteksiFragment : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        // Simpan Uri gambar
         outState.putString("selectedImageUri", selectedImageUri?.toString())
     }
 

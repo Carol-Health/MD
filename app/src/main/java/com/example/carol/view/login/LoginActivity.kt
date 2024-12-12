@@ -72,7 +72,7 @@ class LoginActivity : AppCompatActivity() {
                                                 val timestamp = document.get("createdAt") as? com.google.firebase.Timestamp
                                                 timestamp?.toDate()?.toString() ?: ""
                                             } catch (e: Exception) {
-                                                "" // Jika gagal, gunakan string kosong
+                                                ""
                                             }
 
                                             val userModel = UserModel(

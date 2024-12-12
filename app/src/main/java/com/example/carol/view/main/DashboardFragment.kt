@@ -67,7 +67,6 @@ class DashboardFragment : Fragment() {
                 if (response.isSuccessful) {
                     val historyList = response.body()?.data ?: emptyList()
 
-                    // Urutkan data berdasarkan tanggal (asumsikan `date` dalam format yang bisa diurutkan)
                     val sortedHistoryList = historyList.sortedByDescending { it.date }
 
                     if (isAdded) {
