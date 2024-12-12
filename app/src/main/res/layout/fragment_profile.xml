@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:src="@drawable/freepik__expand__99178"
         android:scaleType="centerCrop"
-        android:alpha="0.3"/>
+        android:alpha="0.2"/>
 
     <ScrollView
         android:layout_width="match_parent"
