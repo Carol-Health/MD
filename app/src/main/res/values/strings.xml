@@ -7,23 +7,23 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="login">Masuk</string>
-    <string name="login_image_description">Login Image</string>
+    <string name="login_image_description">Foto Login</string>
 
-    <string name="result">Result</string>
-    <string name="disease_label">Disease : </string>
-    <string name="disease">Disease</string>
-    <string name="result_image">Result Image</string>
-    <string name="description_label">Description : </string>
-    <string name="description">Description</string>
-    <string name="treatment_label">Treatment : </string>
-    <string name="treatment">Treatment</string>
+    <string name="result">Hasil</string>
+    <string name="disease_label">Penyakit : </string>
+    <string name="disease">Penyakit</string>
+    <string name="result_image">Foto Hasil</string>
+    <string name="description_label">Deskripsi : </string>
+    <string name="description">Deskripsi</string>
+    <string name="treatment_label">Penanganan : </string>
+    <string name="treatment">Penanganan</string>
 
     <string name="title_signup_page">Lengkapi data dirimu</string>
     <string name="name">Nama</string>
     <string name="signup">Daftar</string>
-    <string name="register_image_description">Register Image</string>
+    <string name="register_image_description">Foto Pendaftaran</string>
 
-    <string name="welcome_image_description">Welcome Image</string>
+    <string name="welcome_image_description">Foto Sambutan</string>
     <string name="title_welcome_page">Selamat datang di Carol!</string>
     <string name="message_welcome_page">Mau deteksi penyakit mulut dan dapatkan penanganan yang tepat? Gunakan Carol, solusi pintar untuk kesehatan mulut Anda!</string>
 
@@ -31,22 +31,22 @@
     <string name="dashboard_text">Jangan lupa rawat mulut anda selalu.</string>
 
     <string name="deteksi">Deteksi</string>
-    <string name="deteksi_image_description">Deteksi Image</string>
-    <string name="use_camera">Use Camera</string>
-    <string name="choose_image">Choose Image</string>
-    <string name="lets_analyze">Lets Analyze</string>
+    <string name="deteksi_image_description">Deteksi Foto</string>
+    <string name="use_camera">Buka Kamera</string>
+    <string name="choose_image">Pilih Foto</string>
+    <string name="lets_analyze">Mulai Analisa</string>
 
-    <string name="profile">Profile</string>
-    <string name="profile_image_description">Profile Image</string>
-    <string name="personal_information">Personal Information</string>
-    <string name="full_name">Full Name</string>
+    <string name="profile">Profil</string>
+    <string name="profile_image_description">Foto Profil</string>
+    <string name="personal_information">Informasi Diri</string>
+    <string name="full_name">Nama Lengkap</string>
     <string name="email_profile">E-Mail</string>
     <string name="log_out">Logout</string>
 
-    <string name="date_time">Date / Time</string>
-    <string name="history_image_description">History Image</string>
-    <string name="disease_name">Disease</string>
-    <string name="description_dashboard">Description</string>
+    <string name="date_time">Tanggal / Waktu</string>
+    <string name="history_image_description">Foto Riwayat</string>
+    <string name="disease_name">Penyakit</string>
+    <string name="description_dashboard">Deskripsi</string>
     <string name="perlakuan">Perlakuan : </string>
-    <string name="treatment_dashboard">Treatment</string>
+    <string name="treatment_dashboard">Penanganan</string>
 </resources>

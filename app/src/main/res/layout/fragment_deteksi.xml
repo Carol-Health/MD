@@ -3,6 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/freepik__expand__99178"
+        android:scaleType="fitCenter"
+        android:alpha="0.3"/>
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/topBar"
         android:layout_width="0dp"
@@ -16,17 +23,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:src="@drawable/baseline_image_25"
-        android:scaleType="fitCenter"
-        app:layout_constraintTop_toBottomOf="@id/topBar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/background"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/border"
         app:layout_constraintBottom_toTopOf="@+id/buttonLayout"
-        android:contentDescription="@string/deteksi_image_description" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topBar"
+        app:layout_constraintVertical_bias="0.39"
+        app:shapeAppearanceOverlay="@style/cornerImageUpload"
+        />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imageView"
+        android:layout_width="380dp"
+        android:layout_height="380dp"
+        android:layout_marginTop="12dp"
+        android:contentDescription="@string/deteksi_image_description"
+        android:scaleType="fitCenter"
+        android:src="@drawable/baseline_image_25"
+        app:layout_constraintBottom_toTopOf="@+id/buttonLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.483"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topBar"
+        app:layout_constraintVertical_bias="0.289"/>
 
     <LinearLayout
         android:id="@+id/buttonLayout"
@@ -43,7 +68,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/use_camera"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:textAllCaps="false"/>
 
         <Button
             android:id="@+id/chooseImageButton"
@@ -51,7 +77,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/choose_image"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:textAllCaps="false"/>
 
         <Button
             android:id="@+id/analyzeButton"
@@ -59,7 +86,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/lets_analyze"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            />
 
         <ProgressBar
             android:id="@+id/progressBar"
