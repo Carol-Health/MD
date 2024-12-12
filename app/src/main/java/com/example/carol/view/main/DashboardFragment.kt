@@ -20,14 +20,14 @@ import retrofit2.Response
 class DashboardFragment : Fragment() {
     private var _binding: FragmentDashboardBinding? = null
     private val binding get() = _binding!!
-    private lateinit var historyAdapter: HistoryAdapter
 
+    private lateinit var historyAdapter: HistoryAdapter
     private var displayName: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -122,4 +122,5 @@ class DashboardFragment : Fragment() {
         _binding = null
     }
 }
+
 
