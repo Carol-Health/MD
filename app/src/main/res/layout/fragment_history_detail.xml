@@ -1,58 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
     android:background="@drawable/dialog_background"
     tools:context=".view.main.HistoryDetailFragment">
 
-    <ImageView
-        android:id="@+id/diseaseImageView"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scaleType="centerCrop" />
-
-    <TextView
-        android:id="@+id/dateTextView"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Date"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:paddingTop="8dp" />
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <TextView
-        android:id="@+id/diseaseNameTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Disease Name"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:paddingTop="8dp" />
+        <ImageView
+            android:id="@+id/diseaseImageView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop" />
 
-    <TextView
-        android:id="@+id/descriptionTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Description"
-        android:paddingTop="8dp" />
+        <TextView
+            android:id="@+id/dateTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:paddingTop="8dp" />
 
-    <TextView
-        android:id="@+id/treatmentTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Treatment"
-        android:paddingTop="8dp" />
+        <TextView
+            android:id="@+id/diseaseNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Disease Name"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingTop="8dp" />
 
-    <Button
-        android:id="@+id/closeButton"
-        android:layout_width="80dp"
-        android:layout_height="40dp"
-        android:text="Close"
-        android:textSize="10sp"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp" />
+        <TextView
+            android:id="@+id/descriptionTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:paddingTop="8dp" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/treatmentTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Treatment"
+            android:paddingTop="8dp" />
+
+        <Button
+            android:id="@+id/closeButton"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:text="Close"
+            android:textSize="10sp"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp" />
+
+    </LinearLayout>
+
+</ScrollView>
