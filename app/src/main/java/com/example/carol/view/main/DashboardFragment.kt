@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import android.util.Log
 
 class DashboardFragment : Fragment() {
     private var _binding: FragmentDashboardBinding? = null
@@ -29,6 +30,7 @@ class DashboardFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
+        Log.d("DashboardFragment", "onCreateView: Binding initialized")
         return binding.root
     }
 
@@ -66,24 +68,24 @@ class DashboardFragment : Fragment() {
                 call: Call<HistoryApiResponse>,
                 response: Response<HistoryApiResponse>
             ) {
+                if (!isAdded || _binding == null) return
+
+                binding.progressBar.visibility = View.GONE
+
                 if (response.isSuccessful) {
                     val historyList = response.body()?.data ?: emptyList()
-
                     val sortedHistoryList = historyList.sortedByDescending { it.date }
-
-                    binding.progressBar.visibility = View.GONE
-                    if (isAdded) {
-                        historyAdapter.submitList(sortedHistoryList)
-                    }
+                    historyAdapter.submitList(sortedHistoryList)
                 } else {
                     Toast.makeText(context, "Failed to fetch history", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onFailure(call: Call<HistoryApiResponse>, t: Throwable) {
-                if (isAdded) {
-                    Toast.makeText(context, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
-                }
+                if (!isAdded || _binding == null) return
+
+                binding.progressBar.visibility = View.GONE
+                Toast.makeText(context, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
             }
         })
     }
@@ -119,6 +121,7 @@ class DashboardFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        Log.d("DashboardFragment", "onDestroyView: Clearing binding")
         _binding = null
     }
 }
