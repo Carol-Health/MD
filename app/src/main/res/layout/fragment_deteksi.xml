@@ -25,7 +25,8 @@
         app:layout_constraintTop_toBottomOf="@id/topBar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/buttonLayout" />
+        app:layout_constraintBottom_toTopOf="@+id/buttonLayout"
+        android:contentDescription="@string/deteksi_image_description" />
 
     <LinearLayout
         android:id="@+id/buttonLayout"
