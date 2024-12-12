@@ -1,17 +1,43 @@
 <resources>
+
     <string name="app_name">CAROL</string>
-    <string name="signup">Daftar</string>
-    <string name="login">Masuk</string>
-    <string name="message_welcome_page">Mau deteksi penyakit mulut dan dapatkan penanganan yang tepat? Gunakan Carol, solusi pintar untuk kesehatan mulut Anda!</string>
-    <string name="title_welcome_page">Selamat datang di Carol!</string>
-    <string name="title_signup_page">Lengkapi data dirimu</string>
+
+    <string name="title_login_page">Sudah siap untuk mendeteksi mulut anda?</string>
+    <string name="message_login_page">Masukkan datamu dahuluya</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="message_login_page">Masukkan datamu dahuluya</string>
-    <string name="title_login_page">Sudah siap untuk mendeteksi mulut anda?</string>
+    <string name="login">Masuk</string>
+
+    <string name="result">Result</string>
+    <string name="disease">Disease : </string>
+    <string name="result_image">Result Image</string>
+    <string name="description">Description : </string>
+    <string name="treatment">Treatment : </string>
+
+    <string name="title_signup_page">Lengkapi data dirimu</string>
     <string name="name">Nama</string>
-    <string name="message_main_page">Selamat Belajar di Dicoding.</string>
-    <string name="greeting">Halo %1$s,</string>
-    <string name="logout">Keluar</string>
-    <string name="contact">Contact</string>
+    <string name="signup">Daftar</string>
+
+    <string name="title_welcome_page">Selamat datang di Carol!</string>
+    <string name="message_welcome_page">Mau deteksi penyakit mulut dan dapatkan penanganan yang tepat? Gunakan Carol, solusi pintar untuk kesehatan mulut Anda!</string>
+
+    <string name="dashboard">Dashboard</string>
+    <string name="dashboard_text">Jangan lupa rawat mulut anda selalu.</string>
+
+    <string name="deteksi">Deteksi</string>
+    <string name="use_camera">Use Camera</string>
+    <string name="choose_image">Choose Image</string>
+    <string name="lets_analyze">Lets Analyze</string>
+
+    <string name="profile">Profile</string>
+    <string name="personal_information">Personal Information</string>
+    <string name="full_name">Full Name</string>
+    <string name="email_profile">E-Mail</string>
+    <string name="log_out">Logout</string>
+
+    <string name="date_time">Date / Time</string>
+    <string name="disease_name">Disease</string>
+    <string name="description_dashboard">Description</string>
+    <string name="perlakuan">Perlakuan : </string>
+    <string name="treatment_dashboard">Treatment</string>
 </resources>

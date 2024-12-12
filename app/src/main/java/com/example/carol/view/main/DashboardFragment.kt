@@ -72,16 +72,13 @@ class DashboardFragment : Fragment() {
     private fun fetchUserName() {
         val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return
 
-        // Mengambil referensi Firestore
         val firestore = FirebaseFirestore.getInstance()
 
-        // Mengambil dokumen pengguna berdasarkan uid
         firestore.collection("users").document(uid).get()
             .addOnSuccessListener { document ->
                 if (document != null && document.exists()) {
                     val displayName = document.getString("username") ?: "Nama tidak tersedia"
 
-                    // Menampilkan nama pengguna di TextView
                     binding.userNameTextView.text = "Hello, $displayName!"
                 } else {
                     binding.userNameTextView.text = "Nama tidak ditemukan"

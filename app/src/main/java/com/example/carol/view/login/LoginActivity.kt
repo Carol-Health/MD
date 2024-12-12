@@ -69,7 +69,7 @@ class LoginActivity : AppCompatActivity() {
                                     .addOnSuccessListener { document ->
                                         if (document.exists()) {
                                             val createdAtTimestamp = document.getTimestamp("createdAt")
-                                            val createdAt = createdAtTimestamp?.toDate()?.toString() ?: "" // Convert Timestamp to String
+                                            val createdAt = createdAtTimestamp?.toDate()?.toString() ?: ""
 
                                             val userModel = UserModel(
                                                 id = user.uid,

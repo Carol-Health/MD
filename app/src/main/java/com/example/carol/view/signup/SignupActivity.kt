@@ -69,7 +69,7 @@ class SignupActivity : AppCompatActivity() {
                             val user = auth.currentUser
                             if (user != null) {
                                 val userId = user.uid
-                                val createdAt = Timestamp.now() // Firebase Timestamp
+                                val createdAt = Timestamp.now()
                                 val userData = hashMapOf(
                                     "id" to userId,
                                     "username" to name,
