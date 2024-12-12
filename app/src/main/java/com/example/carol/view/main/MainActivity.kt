@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private val SELECTED_FRAGMENT_KEY = "selected_fragment_key"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +33,15 @@ class MainActivity : AppCompatActivity() {
         setupView()
         setupBottomNavigation()
 
-        loadFragment(DashboardFragment())
+        if (savedInstanceState == null) {
+            loadFragment(DashboardFragment())
+        } else {
+            val selectedFragmentTag = savedInstanceState.getString(SELECTED_FRAGMENT_KEY)
+            val fragment = supportFragmentManager.findFragmentByTag(selectedFragmentTag)
+            if (fragment != null) {
+                loadFragment(fragment)
+            }
+        }
     }
 
     private fun setupView() {
@@ -64,7 +73,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainer, fragment)
+            .replace(R.id.fragmentContainer, fragment, fragment::class.java.simpleName)
             .commit()
     }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        val currentFragment =
+            supportFragmentManager.findFragmentById(R.id.fragmentContainer)
+        currentFragment?.let {
+            outState.putString(SELECTED_FRAGMENT_KEY, it::class.java.simpleName)
+        }
+    }
 }
+

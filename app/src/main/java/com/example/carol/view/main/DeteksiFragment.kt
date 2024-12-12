@@ -61,7 +61,19 @@ class DeteksiFragment : Fragment() {
         useCameraButton.setOnClickListener { openCamera() }
         analyzeButton.setOnClickListener { analyzeImage() }
 
+        savedInstanceState?.getString("selectedImageUri")?.let {
+            selectedImageUri = Uri.parse(it)
+            imageView.setImageURI(selectedImageUri)
+            selectedImageFile = selectedImageUri?.let { uriToFile(it) }
+        }
+
         return view
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        // Simpan Uri gambar
+        outState.putString("selectedImageUri", selectedImageUri?.toString())
     }
 
     private fun openGallery() {

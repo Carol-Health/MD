@@ -68,8 +68,12 @@ class LoginActivity : AppCompatActivity() {
                                 firestore.collection("users").document(user.uid).get()
                                     .addOnSuccessListener { document ->
                                         if (document.exists()) {
-                                            val createdAtTimestamp = document.getTimestamp("createdAt")
-                                            val createdAt = createdAtTimestamp?.toDate()?.toString() ?: ""
+                                            val createdAt = try {
+                                                val timestamp = document.get("createdAt") as? com.google.firebase.Timestamp
+                                                timestamp?.toDate()?.toString() ?: ""
+                                            } catch (e: Exception) {
+                                                "" // Jika gagal, gunakan string kosong
+                                            }
 
                                             val userModel = UserModel(
                                                 id = user.uid,

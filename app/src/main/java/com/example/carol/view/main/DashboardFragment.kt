@@ -18,10 +18,11 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class DashboardFragment : Fragment() {
-
     private var _binding: FragmentDashboardBinding? = null
     private val binding get() = _binding!!
     private lateinit var historyAdapter: HistoryAdapter
+
+    private var displayName: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,10 +35,17 @@ class DashboardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupRecyclerView()
-        fetchUserName()
-        fetchHistory()
+        if (savedInstanceState != null) {
+            displayName = savedInstanceState.getString("username")
+        }
 
+        setupRecyclerView()
+        if (displayName != null) {
+            binding.userNameTextView.text = "Hello, $displayName!"
+        } else {
+            fetchUserName()
+        }
+        fetchHistory()
     }
 
     private fun setupRecyclerView() {
@@ -49,7 +57,7 @@ class DashboardFragment : Fragment() {
     }
 
     private fun fetchHistory() {
-        val uid = FirebaseAuth.getInstance().currentUser!!.uid
+        val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return
 
         ApiClient.apiService.getHistory(uid).enqueue(object : Callback<HistoryApiResponse> {
             override fun onResponse(
@@ -58,13 +66,22 @@ class DashboardFragment : Fragment() {
             ) {
                 if (response.isSuccessful) {
                     val historyList = response.body()?.data ?: emptyList()
-                    historyAdapter.submitList(historyList)
+
+                    // Urutkan data berdasarkan tanggal (asumsikan `date` dalam format yang bisa diurutkan)
+                    val sortedHistoryList = historyList.sortedByDescending { it.date }
+
+                    if (isAdded) {
+                        historyAdapter.submitList(sortedHistoryList)
+                    }
                 } else {
                     Toast.makeText(context, "Failed to fetch history", Toast.LENGTH_SHORT).show()
                 }
             }
+
             override fun onFailure(call: Call<HistoryApiResponse>, t: Throwable) {
-                Toast.makeText(context, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+                if (isAdded) {
+                    Toast.makeText(context, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+                }
             }
         })
     }
@@ -76,22 +93,31 @@ class DashboardFragment : Fragment() {
 
         firestore.collection("users").document(uid).get()
             .addOnSuccessListener { document ->
-                if (document != null && document.exists()) {
-                    val displayName = document.getString("username") ?: "Nama tidak tersedia"
-
-                    binding.userNameTextView.text = "Hello, $displayName!"
-                } else {
-                    binding.userNameTextView.text = "Nama tidak ditemukan"
+                if (isAdded && _binding != null) {
+                    if (document.exists()) {
+                        val name = document.getString("username") ?: "Nama tidak tersedia"
+                        displayName = name
+                        binding.userNameTextView.text = "Hello, $name!"
+                    } else {
+                        binding.userNameTextView.text = "Nama tidak ditemukan"
+                    }
                 }
             }
             .addOnFailureListener {
-                binding.userNameTextView.text = "Error memuat nama"
+                if (isAdded && _binding != null) {
+                    binding.userNameTextView.text = "Error memuat nama"
+                }
             }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("username", displayName)
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 }
+
