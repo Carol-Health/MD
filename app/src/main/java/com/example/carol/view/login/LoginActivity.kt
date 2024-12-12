@@ -17,6 +17,7 @@ import com.example.carol.view.ViewModelFactory
 import com.example.carol.view.main.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 
 class LoginActivity : AppCompatActivity() {
     private val viewModel by viewModels<LoginViewModel> {
@@ -117,17 +118,18 @@ class LoginActivity : AppCompatActivity() {
                                         }
                                 }
                             } else {
-                                Toast.makeText(
-                                    this,
-                                    "Login gagal: ${task.exception?.message}",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                val errorMessage = when (task.exception) {
+                                    is FirebaseAuthInvalidCredentialsException -> "Incorrect email or password"
+                                    else -> "Login gagal: ${task.exception?.message}"
+                                }
+                                Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
                             }
                         }
                 }
             }
         }
     }
+
 
     private fun playAnimation() {
         ObjectAnimator.ofFloat(binding.imageView, View.TRANSLATION_X, -30f, 30f).apply {
