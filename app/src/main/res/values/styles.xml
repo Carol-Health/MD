@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CustomDialogStyle" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.5</item> <!-- Tingkat gelap -->
+        <item name="android:windowBackground">@android:color/white</item> <!-- Background solid -->
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowMinWidthMajor">80%</item> <!-- Minimal lebar dialog -->
+    </style>
+</resources>
