@@ -85,5 +85,8 @@ class MainActivity : AppCompatActivity() {
             outState.putString(SELECTED_FRAGMENT_KEY, it::class.java.simpleName)
         }
     }
-}
 
+    override fun onBackPressed() {
+        finishAffinity()
+    }
+}
