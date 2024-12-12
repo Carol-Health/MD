@@ -41,53 +41,11 @@ class DashboardFragment : Fragment() {
             displayName = savedInstanceState.getString("username")
         }
 
-        setupRecyclerView()
         if (displayName != null) {
             binding.userNameTextView.text = "Hello, $displayName!"
         } else {
             fetchUserName()
         }
-        fetchHistory()
-    }
-
-    private fun setupRecyclerView() {
-        historyAdapter = HistoryAdapter()
-        binding.recycleView.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = historyAdapter
-        }
-    }
-
-    private fun fetchHistory() {
-        val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return
-
-        binding.progressBar.visibility = View.VISIBLE
-
-        ApiClient.apiService.getHistory(uid).enqueue(object : Callback<HistoryApiResponse> {
-            override fun onResponse(
-                call: Call<HistoryApiResponse>,
-                response: Response<HistoryApiResponse>
-            ) {
-                if (!isAdded || _binding == null) return
-
-                binding.progressBar.visibility = View.GONE
-
-                if (response.isSuccessful) {
-                    val historyList = response.body()?.data ?: emptyList()
-                    val sortedHistoryList = historyList.sortedByDescending { it.date }
-                    historyAdapter.submitList(sortedHistoryList)
-                } else {
-                    Toast.makeText(context, "Failed to fetch history", Toast.LENGTH_SHORT).show()
-                }
-            }
-
-            override fun onFailure(call: Call<HistoryApiResponse>, t: Throwable) {
-                if (!isAdded || _binding == null) return
-
-                binding.progressBar.visibility = View.GONE
-                Toast.makeText(context, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
-            }
-        })
     }
 
     private fun fetchUserName() {

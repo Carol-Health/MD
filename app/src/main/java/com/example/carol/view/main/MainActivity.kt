@@ -62,6 +62,7 @@ class MainActivity : AppCompatActivity() {
             val selectedFragment = when (item.itemId) {
                 R.id.navigation_dashboard -> DashboardFragment()
                 R.id.navigation_detection -> DeteksiFragment()
+                R.id.navigation_history -> HistoryFragment()
                 R.id.navigation_profile -> ProfileFragment()
                 else -> null
             }

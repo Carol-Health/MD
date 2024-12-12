@@ -34,6 +34,9 @@
             android:name=".view.main.DeteksiFragment"
             android:exported="false" />
         <activity
+            android:name=".view.main.HistoryFragment"
+            android:exported="false" />
+        <activity
             android:name=".view.main.ProfileFragment"
             android:exported="false" />
         <activity

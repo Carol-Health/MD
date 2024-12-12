@@ -9,6 +9,10 @@
         android:icon="@drawable/baseline_camera_alt_24"
         android:title="Deteksi" />
     <item
+        android:id="@+id/navigation_history"
+        android:icon="@drawable/baseline_history_24"
+        android:title="Histori" />
+    <item
         android:id="@+id/navigation_profile"
         android:icon="@drawable/ic_baseline_person_24"
         android:title="Profile" />

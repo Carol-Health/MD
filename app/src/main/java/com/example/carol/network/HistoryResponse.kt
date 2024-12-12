@@ -1,7 +1,10 @@
 package com.example.carol.network
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class HistoryResponse(
     @field:SerializedName("createdAt")
     val date: String,
@@ -17,4 +20,4 @@ data class HistoryResponse(
 
     @field:SerializedName("treatment")
     val treatment: String
-)
+):Parcelable

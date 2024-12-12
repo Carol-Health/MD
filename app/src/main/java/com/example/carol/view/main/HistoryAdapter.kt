@@ -8,7 +8,7 @@ import com.example.carol.R
 import com.example.carol.network.HistoryResponse
 import com.bumptech.glide.Glide;
 
-class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() {
+class HistoryAdapter(private val onItemClicked: (HistoryResponse) -> Unit) : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() {
 
     private var historyList = listOf<HistoryResponse>()
 
@@ -26,6 +26,9 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() 
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
         val item = historyList[position]
         holder.bind(item)
+        holder.itemView.setOnClickListener {
+            onItemClicked(item)
+        }
     }
 
     override fun getItemCount(): Int = historyList.size
@@ -34,20 +37,17 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() 
         private val dateTextView: TextView = itemView.findViewById(R.id.dateTextView)
         private val diseaseImageView: ImageView = itemView.findViewById(R.id.diseaseImageView)
         private val diseaseNameTextView: TextView = itemView.findViewById(R.id.diseaseNameTextView)
-        private val descriptionTextView: TextView = itemView.findViewById(R.id.descriptionTextView)
-        private val treatmentTextView: TextView = itemView.findViewById(R.id.treatmentTextView)
 
         fun bind(item: HistoryResponse) {
             dateTextView.text = item.date
             diseaseNameTextView.text = item.diseaseName
-            descriptionTextView.text = item.description
-            treatmentTextView.text = item.treatment
 
             val correctedUrl = item.imageUrl.replace("carol-image-predict/images/carol-image-predict/images", "carol-image-predict/images")
 
             Glide.with(itemView.context)
                 .load(correctedUrl)
                 .into(diseaseImageView)
+
         }
     }
 }
