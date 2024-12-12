@@ -63,42 +63,50 @@ class SignupActivity : AppCompatActivity() {
                 !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> binding.emailEditText.error = "Format email tidak valid"
                 password.isEmpty() -> binding.passwordEditText.error = "Password tidak boleh kosong"
                 password.length < 7 -> binding.passwordEditText.error = "Password minimal 7 karakter"
-                else -> auth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this) { task ->
-                        if (task.isSuccessful) {
-                            val user = auth.currentUser
-                            if (user != null) {
-                                val userId = user.uid
-                                val createdAt = Timestamp.now()
-                                val userData = hashMapOf(
-                                    "id" to userId,
-                                    "username" to name,
-                                    "email" to email,
-                                    "password" to hashPassword(password),
-                                    "createdAt" to createdAt
-                                )
+                else -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                    auth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(this) { task ->
+                            binding.progressBar.visibility = View.GONE
+                            if (task.isSuccessful) {
+                                val user = auth.currentUser
+                                if (user != null) {
+                                    val userId = user.uid
+                                    val createdAt = Timestamp.now()
+                                    val userData = hashMapOf(
+                                        "id" to userId,
+                                        "username" to name,
+                                        "email" to email,
+                                        "password" to hashPassword(password),
+                                        "createdAt" to createdAt
+                                    )
 
-                                firestore.collection("users").document(userId).set(userData)
-                                    .addOnSuccessListener {
-                                        Toast.makeText(
-                                            this,
-                                            "Signup berhasil. Silakan login.",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                        finish()
-                                    }
-                                    .addOnFailureListener { e ->
-                                        Toast.makeText(
-                                            this,
-                                            "Gagal menyimpan data pengguna: ${e.message}",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    }
+                                    firestore.collection("users").document(userId).set(userData)
+                                        .addOnSuccessListener {
+                                            Toast.makeText(
+                                                this,
+                                                "Signup berhasil. Silakan login.",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                            finish()
+                                        }
+                                        .addOnFailureListener { e ->
+                                            Toast.makeText(
+                                                this,
+                                                "Gagal menyimpan data pengguna: ${e.message}",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                }
+                            } else {
+                                Toast.makeText(
+                                    this,
+                                    "Signup gagal: ${task.exception?.message}",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
-                        } else {
-                            Toast.makeText(this, "Signup gagal: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                         }
-                    }
+                }
             }
         }
     }

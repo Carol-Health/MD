@@ -60,45 +60,71 @@ class LoginActivity : AppCompatActivity() {
                 email.isEmpty() -> binding.emailEditText.error = "Email tidak boleh kosong"
                 !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> binding.emailEditText.error = "Format email tidak valid"
                 password.isEmpty() -> binding.passwordEditText.error = "Password tidak boleh kosong"
-                else -> auth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this) { task ->
-                        if (task.isSuccessful) {
-                            val user = auth.currentUser
-                            if (user != null) {
-                                firestore.collection("users").document(user.uid).get()
-                                    .addOnSuccessListener { document ->
-                                        if (document.exists()) {
-                                            val createdAt = try {
-                                                val timestamp = document.get("createdAt") as? com.google.firebase.Timestamp
-                                                timestamp?.toDate()?.toString() ?: ""
-                                            } catch (e: Exception) {
-                                                ""
-                                            }
+                else -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                    auth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(this) { task ->
+                            binding.progressBar.visibility = View.GONE
+                            if (task.isSuccessful) {
+                                val user = auth.currentUser
+                                if (user != null) {
+                                    firestore.collection("users").document(user.uid).get()
+                                        .addOnSuccessListener { document ->
+                                            if (document.exists()) {
+                                                val createdAt = try {
+                                                    val timestamp =
+                                                        document.get("createdAt") as? com.google.firebase.Timestamp
+                                                    timestamp?.toDate()?.toString() ?: ""
+                                                } catch (e: Exception) {
+                                                    ""
+                                                }
 
-                                            val userModel = UserModel(
-                                                id = user.uid,
-                                                email = user.email,
-                                                username = document.getString("username"),
-                                                isLogin = true,
-                                                createdAt = createdAt,
-                                                password = document.getString("password") ?: ""
-                                            )
-                                            viewModel.saveSession(userModel)
-                                            Toast.makeText(this, "Login berhasil!", Toast.LENGTH_SHORT).show()
-                                            startActivity(Intent(this, MainActivity::class.java))
-                                            finish()
-                                        } else {
-                                            Toast.makeText(this, "Data pengguna tidak ditemukan.", Toast.LENGTH_SHORT).show()
+                                                val userModel = UserModel(
+                                                    id = user.uid,
+                                                    email = user.email,
+                                                    username = document.getString("username"),
+                                                    isLogin = true,
+                                                    createdAt = createdAt,
+                                                    password = document.getString("password") ?: ""
+                                                )
+                                                viewModel.saveSession(userModel)
+                                                Toast.makeText(
+                                                    this,
+                                                    "Login berhasil!",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                                startActivity(
+                                                    Intent(
+                                                        this,
+                                                        MainActivity::class.java
+                                                    )
+                                                )
+                                                finish()
+                                            } else {
+                                                Toast.makeText(
+                                                    this,
+                                                    "Data pengguna tidak ditemukan.",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            }
                                         }
-                                    }
-                                    .addOnFailureListener {
-                                        Toast.makeText(this, "Gagal memuat data pengguna.", Toast.LENGTH_SHORT).show()
-                                    }
+                                        .addOnFailureListener {
+                                            Toast.makeText(
+                                                this,
+                                                "Gagal memuat data pengguna.",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                }
+                            } else {
+                                Toast.makeText(
+                                    this,
+                                    "Login gagal: ${task.exception?.message}",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
-                        } else {
-                            Toast.makeText(this, "Login gagal: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                         }
-                    }
+                }
             }
         }
     }

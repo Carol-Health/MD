@@ -26,6 +26,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
 import java.io.FileOutputStream
+import android.widget.ProgressBar
 
 class DeteksiFragment : Fragment() {
 
@@ -104,6 +105,9 @@ class DeteksiFragment : Fragment() {
             return
         }
 
+        val progressBar: ProgressBar = requireView().findViewById(R.id.progressBar)
+        progressBar.visibility = View.VISIBLE
+
         val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), selectedImageFile!!)
         val body = MultipartBody.Part.createFormData("file", selectedImageFile!!.name, requestFile)
         val uidBody = RequestBody.create("text/plain".toMediaTypeOrNull(), uid)
@@ -113,6 +117,7 @@ class DeteksiFragment : Fragment() {
                 call: Call<DetectionResponse>,
                 response: Response<DetectionResponse>
             ) {
+                progressBar.visibility = View.GONE
                 if (response.isSuccessful) {
                     val result = response.body()
                     navigateToResultActivity(result)
@@ -122,11 +127,12 @@ class DeteksiFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<DetectionResponse>, t: Throwable) {
+                progressBar.visibility = View.GONE
                 Toast.makeText(context, "An error occurred", Toast.LENGTH_SHORT).show()
-
             }
         })
     }
+
 
     private fun navigateToResultActivity(result: DetectionResponse?) {
         val intent = Intent(requireContext(), ResultActivity::class.java).apply {
