@@ -27,9 +27,9 @@ class ResultActivity : AppCompatActivity() {
         val treatment = intent.getStringExtra("treatment") ?: "No treatment information available."
         val imageUriString = intent.getStringExtra("imageUri")
 
-        diseaseNameTextView.text = "Disease: $diseaseName"
-        descriptionTextView.text = "Description: $description"
-        treatmentTextView.text = "Treatment: $treatment"
+        diseaseNameTextView.text = diseaseName
+        descriptionTextView.text = description
+        treatmentTextView.text = treatment
 
         if (!imageUriString.isNullOrEmpty()) {
             val imageUri = Uri.parse(imageUriString)

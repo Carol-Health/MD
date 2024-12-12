@@ -10,10 +10,13 @@
     <string name="login_image_description">Login Image</string>
 
     <string name="result">Result</string>
-    <string name="disease">Disease : </string>
+    <string name="disease_label">Disease : </string>
+    <string name="disease">Disease</string>
     <string name="result_image">Result Image</string>
-    <string name="description">Description : </string>
-    <string name="treatment">Treatment : </string>
+    <string name="description_label">Description : </string>
+    <string name="description">Description</string>
+    <string name="treatment_label">Treatment : </string>
+    <string name="treatment">Treatment</string>
 
     <string name="title_signup_page">Lengkapi data dirimu</string>
     <string name="name">Nama</string>
