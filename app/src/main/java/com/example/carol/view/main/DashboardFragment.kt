@@ -59,6 +59,8 @@ class DashboardFragment : Fragment() {
     private fun fetchHistory() {
         val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return
 
+        binding.progressBar.visibility = View.VISIBLE
+
         ApiClient.apiService.getHistory(uid).enqueue(object : Callback<HistoryApiResponse> {
             override fun onResponse(
                 call: Call<HistoryApiResponse>,
@@ -69,6 +71,7 @@ class DashboardFragment : Fragment() {
 
                     val sortedHistoryList = historyList.sortedByDescending { it.date }
 
+                    binding.progressBar.visibility = View.GONE
                     if (isAdded) {
                         historyAdapter.submitList(sortedHistoryList)
                     }
