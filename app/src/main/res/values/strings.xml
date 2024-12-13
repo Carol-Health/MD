@@ -9,13 +9,13 @@
     <string name="login">Masuk</string>
     <string name="login_image_description">Login Image</string>
 
-    <string name="result">Result</string>
-    <string name="disease_label">Disease : </string>
+    <string name="result">Hasil</string>
+    <string name="disease_label">Penyakit : </string>
     <string name="disease">Disease</string>
     <string name="result_image">Result Image</string>
-    <string name="description_label">Description : </string>
+    <string name="description_label">Deskripsi : </string>
     <string name="description">Description</string>
-    <string name="treatment_label">Treatment : </string>
+    <string name="treatment_label">Penanganan : </string>
     <string name="treatment">Treatment</string>
 
     <string name="title_signup_page">Lengkapi data dirimu</string>
@@ -30,11 +30,13 @@
     <string name="dashboard">Dashboard</string>
     <string name="dashboard_text">Carol siap membantumu dalam mengetahui kondisi dan menjaga kesehatan mulutmu</string>
 
+    <string name="date">Date</string>
     <string name="deteksi">Deteksi</string>
     <string name="deteksi_image_description">Deteksi Foto</string>
     <string name="use_camera">Buka Kamera</string>
     <string name="choose_image">Pilih Foto</string>
     <string name="lets_analyze">Mulai Analisa</string>
+    <string name="close">Close</string>
 
     <string name="profile">Profile</string>
     <string name="profile_image_description">Profile Image</string>
